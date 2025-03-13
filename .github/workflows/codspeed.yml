@@ -1,4 +1,4 @@
-name: CodSpeed
+name: CodSpeed Benchmarks
 
 on:
   push:
@@ -11,25 +11,26 @@ on:
 
 jobs:
   benchmarks:
-    name: Run benchmarks
+    name: Run all benchmarks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install dependencies
+      - name: Install build tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake g++ libboost-all-dev
+          sudo apt-get install -y cmake g++
 
-      - name: Build the benchmark target(s)
+      - name: Build the benchmark target
         run: |
           mkdir build
           cd build
           cmake -DCODSPEED_MODE=instrumentation ..
           make -j
 
-      - name: Run the benchmarks
+      - name: Run all benchmarks with CodSpeed
         uses: CodSpeedHQ/action@v3
         with:
           run: build/boost_bench # Path to our executable
           token: ${{ secrets.CODSPEED_TOKEN }}
+          # No filter - run all benchmarks
