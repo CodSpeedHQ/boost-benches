@@ -1,6 +1,3 @@
-#ifndef SPIRIT_BENCH_H
-#define SPIRIT_BENCH_H
-
 #include <benchmark/benchmark.h>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
@@ -136,4 +133,4 @@ static void BM_SpiritCalculator(benchmark::State& state) {
 }
 BENCHMARK(BM_SpiritCalculator);
 
-#endif // SPIRIT_BENCH_H
+BENCHMARK_MAIN();

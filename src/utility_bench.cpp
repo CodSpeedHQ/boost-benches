@@ -1,6 +1,3 @@
-#ifndef UTILITY_BENCH_H
-#define UTILITY_BENCH_H
-
 #include <benchmark/benchmark.h>
 #include <boost/any.hpp>
 #include <boost/algorithm/cxx11/all_of.hpp>
@@ -94,4 +91,4 @@ BENCHMARK(BM_BoostUUID)
   ->Arg(5)      // Few UUIDs
   ->Arg(20);    // Many UUIDs
 
-#endif // UTILITY_BENCH_H
+BENCHMARK_MAIN();

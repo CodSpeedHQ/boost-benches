@@ -1,6 +1,3 @@
-#ifndef STRING_BENCH_H
-#define STRING_BENCH_H
-
 #include <benchmark/benchmark.h>
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
@@ -150,4 +147,4 @@ BENCHMARK(BM_BoostFormat)
   ->Arg(5)    // Medium number of parameters 
   ->Arg(10);  // Many parameters
 
-#endif // STRING_BENCH_H
+BENCHMARK_MAIN();

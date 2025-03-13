@@ -1,6 +1,3 @@
-#ifndef GRAPH_BENCH_H
-#define GRAPH_BENCH_H
-
 #include <benchmark/benchmark.h>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/dijkstra_shortest_paths.hpp>
@@ -456,4 +453,4 @@ BENCHMARK(BM_BoostGraphDFS)
   ->Args({1000, 10})   // Medium graph (1000 vertices, ~10 edges per vertex)
   ->Args({5000, 20});  // Large graph (5000 vertices, ~20 edges per vertex)
 
-#endif // GRAPH_BENCH_H
+BENCHMARK_MAIN();

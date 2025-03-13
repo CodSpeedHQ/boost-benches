@@ -1,6 +1,3 @@
-#ifndef SERIALIZATION_BENCH_H
-#define SERIALIZATION_BENCH_H
-
 #include <benchmark/benchmark.h>
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/vector.hpp>
@@ -303,5 +300,4 @@ BENCHMARK(BM_BoostSerializationCompareFormats)
     ->Args({1, 1000})   // Binary, large
     ->Args({2, 1000});  // XML, large
 
-
-#endif // SERIALIZATION_BENCH_H
+BENCHMARK_MAIN();

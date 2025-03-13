@@ -1,6 +1,3 @@
-#ifndef MULTIINDEX_BENCH_H
-#define MULTIINDEX_BENCH_H
-
 #include <benchmark/benchmark.h>
 #include <boost/multi_index_container.hpp>
 #include <boost/multi_index/ordered_index.hpp>
@@ -300,4 +297,4 @@ BENCHMARK(BM_MultiIndexModify)
   ->Args({1000, 100})   // Medium dataset, many modifications
   ->Args({10000, 100}); // Large dataset, many modifications
 
-#endif // MULTIINDEX_BENCH_H
+BENCHMARK_MAIN();

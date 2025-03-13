@@ -1,6 +1,3 @@
-#ifndef CONTAINER_BENCH_H
-#define CONTAINER_BENCH_H
-
 #include <benchmark/benchmark.h>
 #include <boost/container/flat_map.hpp>
 #include <boost/container/vector.hpp>
@@ -103,4 +100,4 @@ BENCHMARK(BM_BoostVector)
   ->Arg(10000)    // Medium vector
   ->Arg(100000);  // Large vector
 
-#endif // CONTAINER_BENCH_H
+BENCHMARK_MAIN();

@@ -1,15 +1,12 @@
 # Boost Benchmarks
 
-This project contains benchmarks for the Boost C++ library using Google Benchmark. It tests various components of the Boost library with different input sizes and configurations to measure performance characteristics.
+A benchmarking suite for comparing performance of various Boost C++ library components using Google Benchmark.
 
 ## Requirements
 
-- CMake (3.14 or higher)
-- C++ compiler with C++17 support
-- Boost library with the following components:
-  - serialization
-  - graph
-- Internet connection (for downloading Google Benchmark)
+- CMake 3.14+
+- C++17 compiler
+- Boost 1.87.0+ (with serialization and graph components)
 
 ## Building
 
@@ -19,7 +16,11 @@ mkdir -p build
 cd build
 
 # Configure and build
-cmake ..
+# For regular timing-based benchmarks:
+cmake -DCODSPEED_MODE=walltime ..
+# For CodSpeed instrumentation:
+cmake -DCODSPEED_MODE=instrumentation ..
+
 make
 ```
 
@@ -28,101 +29,56 @@ make
 From the build directory:
 
 ```bash
-# Run all benchmarks
-./boost_bench
+# Run individual component benchmarks
+./string_bench
+./container_bench
+./utility_bench
+./optional_bench
+./spirit_bench
+./multiindex_bench
+./graph_bench
+./serialization_bench
 
-# Run specific benchmarks (using regex filter)
-./boost_bench --benchmark_filter="src/string_bench.h::BM_BoostStringSplit"
+# Run all benchmarks with a single command
+cmake --build . --target run_all_benchmarks
 
-# List all available benchmarks
-./boost_bench --benchmark_list_tests
+# Pass arguments to all benchmarks
+cmake --build . --target run_all_benchmarks -- --benchmark_filter=BM_Boost
+
+# Run with regex filter
+./string_bench --benchmark_filter="BM_BoostLexicalCast"
+
+# List available benchmarks
+./string_bench --benchmark_list_tests
 ```
-
-### CodSpeed Integration
-
-This project is set up to run benchmarks in CI using [CodSpeed](https://codspeed.io/). When a pull request is opened or code is pushed to the main branch, GitHub Actions will automatically build and run the benchmarks, reporting the results to CodSpeed.
-
-#### CI Workflow
-
-The GitHub Actions workflow:
-1. Installs necessary tools and dependencies:
-   - CMake and GCC for building
-   - Required Boost components (serialization, graph)
-2. Configures the project with CodSpeed instrumentation
-3. Builds the project
-4. Runs all benchmarks and reports results to CodSpeed
-
-#### Local CodSpeed Testing
-
-To enable CodSpeed instrumentation locally:
-
-```bash
-mkdir -p build && cd build
-cmake -DCODSPEED_MODE=instrumentation ..
-make
-
-# Run the benchmarks with CodSpeed instrumentation
-./boost_bench
-```
-
-You'll see a message like this when running with CodSpeed instrumentation locally:
-```
-NOTICE: codspeed is enabled, but no performance measurement will be made since it's running in an unknown environment.
-```
-
-This is normal as CodSpeed metrics are only collected in CI environments.
-
-You'll need to set up a `CODSPEED_TOKEN` secret in your GitHub repository settings for the CodSpeed integration to work in CI.
-
-## Notes
-
-- CodSpeed's fork of Google Benchmark is automatically downloaded and configured via CMake's FetchContent
-- The benchmarks are parameterized to test with different input sizes (small, medium, large)
-- The project is organized into modular benchmark files for better maintainability
-- CodSpeed integration allows performance tracking in CI
 
 ## Benchmark Categories
 
-### String and Text Processing
-- String splitting via boost::algorithm::split
-- Integer and floating-point conversion via boost::lexical_cast
-- Regular expressions via boost::regex
-- String formatting via boost::format
+- **string_bench**: String operations, lexical_cast, regex, format
+- **container_bench**: Container performance comparisons
+- **utility_bench**: Type-safe any, algorithms, UUID generation
+- **optional_bench**: Boost vs std::optional
+- **spirit_bench**: Parsing operations (CSV, JSON, expressions)
+- **multiindex_bench**: Multi-index container operations
+- **graph_bench**: Graph algorithms (Dijkstra, A*, BFS, DFS)
+- **serialization_bench**: Serialization performance (text, binary, XML)
 
-### Containers
-- Container performance comparisons:
-  - boost::container::flat_map vs std::map
-  - boost::container::vector vs std::vector
+## Custom Boost Version
 
-### Utility Libraries
-- Type-safe any type via boost::any
-- Algorithms: boost::algorithm::all_of
-- UUID generation with boost::uuid
-- Optional types: boost::optional vs std::optional
+Specify a custom Boost version:
 
-### Multi-Index Containers
-- Insertion performance vs standard containers
-- Lookup by different indices (ID, email)
-- Range-based queries
-- Modification with reindexing
+```bash
+cmake -DBOOST_VERSION=1.82.0 -DCODSPEED_MODE=walltime ..
+```
 
-### Spirit (Parsing)
-- CSV data parsing
-- JSON structure parsing
-- Calculator expression parsing
+## CodSpeed Integration
 
-### Graph Algorithms
-- Dijkstra's shortest path algorithm
-- A* search on grid graphs
-- Breadth-First Search (BFS)
-- Depth-First Search (DFS)
+This project integrates with [CodSpeed](https://codspeed.io/) for CI performance tracking. For local testing, use:
 
-### Serialization
-- Text archive performance
-- Binary archive performance
-- XML archive performance
-- Format comparison (text vs binary vs XML)
+```bash
+cmake -DCODSPEED_MODE=instrumentation ..
+make
+./string_bench  # Will show notice about running outside CI
+```
 
-## Adding new benchmarks
-
-Add new benchmark functions to the corresponding header file in the `src/` directory, or create a new header file for a new category of benchmarks.
+For CI integration, ensure the `CODSPEED_TOKEN` secret is set in your GitHub repository.

@@ -1,6 +1,3 @@
-#ifndef OPTIONAL_BENCH_H
-#define OPTIONAL_BENCH_H
-
 #include <benchmark/benchmark.h>
 #include <boost/optional.hpp>
 #include <string>
@@ -86,4 +83,4 @@ BENCHMARK(BM_BoostOptional)
   ->Arg(100)     // Medium data
   ->Arg(1000);   // Large data
 
-#endif // OPTIONAL_BENCH_H
+BENCHMARK_MAIN();
