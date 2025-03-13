@@ -28,6 +28,21 @@ From the build directory:
 ./boost_bench
 ```
 
+### CodSpeed Integration
+
+This project is set up to run benchmarks in CI using [CodSpeed](https://codspeed.io/). When a pull request is opened or code is pushed to the main branch, GitHub Actions will automatically build and run the benchmarks, reporting the results to CodSpeed.
+
+To enable CodSpeed instrumentation locally:
+
+```bash
+mkdir -p build && cd build
+cmake -DCODSPEED_MODE=instrumentation ..
+make
+./boost_bench
+```
+
+You'll need to set up a `CODSPEED_TOKEN` secret in your GitHub repository settings for the CodSpeed integration to work in CI.
+
 ## Notes
 
 - CodSpeed's fork of Google Benchmark is automatically downloaded and built via CMake's FetchContent
