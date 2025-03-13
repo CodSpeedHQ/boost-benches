@@ -45,8 +45,10 @@ This project is set up to run benchmarks in CI using [CodSpeed](https://codspeed
 #### CI Workflow
 
 The GitHub Actions workflow:
-1. Installs only the necessary build tools (CMake and GCC)
-2. Configures the project with CodSpeed instrumentation (CMake will automatically handle all library dependencies)
+1. Installs necessary tools and dependencies:
+   - CMake and GCC for building
+   - Required Boost components (serialization, graph)
+2. Configures the project with CodSpeed instrumentation
 3. Builds the project
 4. Runs all benchmarks and reports results to CodSpeed
 
