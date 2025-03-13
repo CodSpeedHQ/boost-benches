@@ -29,7 +29,11 @@ if(CODSPEED_MODE)
 endif()
 
 # Disable -Werror for CodSpeed Benchmark to avoid the unused private field error
-add_compile_options(-Wno-error=unused-private-field)
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wno-error=unused-private-field)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+  add_compile_options(-Wno-error)
+endif()
 
 FetchContent_MakeAvailable(google_benchmark)
 
