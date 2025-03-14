@@ -24,7 +24,7 @@ FetchContent_Declare(
   google_benchmark
   GIT_REPOSITORY https://github.com/CodSpeedHQ/codspeed-cpp
   SOURCE_SUBDIR google_benchmark
-  GIT_TAG v1.0.0
+  GIT_TAG fix-walltime-pid
 )
 FetchContent_MakeAvailable(google_benchmark)
 
